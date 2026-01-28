@@ -1,16 +1,15 @@
 import pluginId from './pluginId';
 import MarkdownInput from './components/MarkdownInput';
-
 export default {
-    register(app: any) {
-        console.log('✅ Markdown Editor admin loaded');
-
+    register(app) {
+        console.log('✅ Markdown Editor admin loaded'); // test log
         app.registerPlugin({
             id: pluginId,
             name: 'Markdown Editor Plugin',
             isReady: true,
             initializer: () => null,
         });
+        // Register the custom field
         app.customFields.register({
             name: 'markdown-editor',
             pluginId: pluginId,
@@ -28,7 +27,6 @@ export default {
             },
         });
     },
-
     async registerTrads() {
         return [];
     },
