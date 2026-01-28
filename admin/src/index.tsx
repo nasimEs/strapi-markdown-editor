@@ -2,9 +2,9 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
+import DOMPurify from 'dompurify';
 import 'react-markdown-editor-lite/lib/index.css';
 import { Box, Flex, Typography } from '@strapi/design-system';
-import DOMPurify from 'dompurify';
 
 interface MarkdownEditorProps {
     attribute: { type: string; [key: string]: any };
@@ -21,17 +21,17 @@ interface MarkdownEditorProps {
 
 const mdParser = new MarkdownIt();
 
-const Input: React.FC<MarkdownEditorProps> = ({
-                                                  attribute,
-                                                  description,
-                                                  disabled,
-                                                  error,
-                                                  intlLabel,
-                                                  name,
-                                                  onChange,
-                                                  required,
-                                                  value,
-                                              }) => {
+const MarkdownInput: React.FC<MarkdownEditorProps> = ({
+                                                          attribute,
+                                                          description,
+                                                          disabled,
+                                                          error,
+                                                          intlLabel,
+                                                          name,
+                                                          onChange,
+                                                          required,
+                                                          value,
+                                                      }) => {
     const { formatMessage } = useIntl();
     const label = intlLabel ? formatMessage(intlLabel) : name;
 
@@ -55,9 +55,9 @@ const Input: React.FC<MarkdownEditorProps> = ({
                 <MdEditor
                     value={value || ''}
                     style={{ height: '300px' }}
-                    renderHTML={(text) => DOMPurify.sanitize(mdParser.render(text))}
+                    renderHTML={(text: string) => DOMPurify.sanitize(mdParser.render(text))}
                     readOnly={disabled}
-                    onChange={({ text }) => {
+                    onChange={({ text }: { text: string }) => {
                         onChange({
                             target: {
                                 name,

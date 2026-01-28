@@ -4,6 +4,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import MarkdownIt from 'markdown-it';
 import 'react-markdown-editor-lite/lib/index.css';
 import { Box, Flex, Typography } from '@strapi/design-system';
+import DOMPurify from 'dompurify';
 
 interface Props {
     name: string;
@@ -44,9 +45,9 @@ const MarkdownInput: React.FC<Props> = ({
                 <MdEditor
                     value={value || ''}
                     style={{ height: '300px' }}
-                    renderHTML={(text) => mdParser.render(text)}
+                    renderHTML={(text: string) => DOMPurify.sanitize(mdParser.render(text))}
                     readOnly={disabled}
-                    onChange={({ text }) => {
+                    onChange={({ text }: { text: string }) => {
                         onChange({
                             target: {
                                 name,
